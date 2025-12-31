@@ -26,7 +26,8 @@ class WaterQualityDataset(Dataset):
         return self.data[idx], self.mask[idx]
 
 
-def load_water_quality_data(filepath=None, return_dataframe=False):
+def load_water_quality_data(filepath=None, return_dataframe=False, 
+                            synthetic_missing_rate=0.07):
     """
     Load water quality time series data.
     
@@ -35,6 +36,7 @@ def load_water_quality_data(filepath=None, return_dataframe=False):
     Args:
         filepath: Path to CSV file (optional)
         return_dataframe: Whether to return pandas DataFrame
+        synthetic_missing_rate: Missing rate for synthetic data (default: 0.07)
         
     Returns:
         data: Time series data
@@ -107,9 +109,8 @@ def load_water_quality_data(filepath=None, return_dataframe=False):
         data[:, 7] = 2 + 1.5 * np.sin(time / 4) + 0.5 * np.random.randn(n_samples)
         data[:, 7] = np.maximum(data[:, 7], 0)  # Non-negative
         
-        # Add some missing values randomly (5-10%)
-        missing_rate = 0.07
-        missing_mask = np.random.rand(n_samples, n_features) < missing_rate
+        # Add some missing values randomly
+        missing_mask = np.random.rand(n_samples, n_features) < synthetic_missing_rate
         data[missing_mask] = np.nan
         
         if return_dataframe:

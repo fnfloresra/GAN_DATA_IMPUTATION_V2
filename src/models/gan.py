@@ -94,6 +94,9 @@ class Discriminator(nn.Module):
 class GAIN:
     """Generative Adversarial Imputation Networks."""
     
+    # Small epsilon value to prevent log(0) in loss calculation
+    EPSILON = 1e-8
+    
     def __init__(self, input_dim, hidden_dim=256, alpha=100, hint_rate=0.9, 
                  learning_rate=0.001, device='cpu'):
         """
@@ -180,7 +183,7 @@ class GAIN:
         d_pred = self.discriminator(imputed_data, hint)
         
         # Generator loss (adversarial + reconstruction)
-        g_loss_adv = -torch.mean((1 - mask) * torch.log(d_pred + 1e-8))
+        g_loss_adv = -torch.mean((1 - mask) * torch.log(d_pred + self.EPSILON))
         g_loss_mse = torch.mean(mask * (data - imputed_data) ** 2)
         g_loss = g_loss_adv + self.alpha * g_loss_mse
         
