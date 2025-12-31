@@ -1,5 +1,7 @@
 # GAN Data Imputation V2
 
+> **Status**: This is version 2 of the GAN Data Imputation project. The repository is currently in the planning and development phase. This README outlines the planned features and structure.
+
 A machine learning project implementing Generative Adversarial Networks (GANs) for data imputation tasks. This project aims to fill missing values in datasets using advanced deep learning techniques.
 
 ## Overview
@@ -60,6 +62,8 @@ Core dependencies (to be installed):
 ## Usage
 
 ### Basic Example
+
+The following shows the planned API for using the GAN imputer:
 
 ```python
 from gan_imputation import GANImputer
